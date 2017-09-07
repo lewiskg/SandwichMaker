@@ -14,11 +14,15 @@ body {
 
 #sandwich-holder, #sandwich-price {
 	border: solid 2px black;
-	text-align: center;
+	text-align: left;
 	min-height:200px;
 	min-width: 250px;
 	display: inline-block;
 	margin: 2px;
+}
+
+#sandwich-price {
+	text-align:center;
 }
 
 
@@ -37,12 +41,18 @@ ul {
 hr {
 	width: 250px;
 }
-/*
-span {
-	display: block;
-}
-*/
 
 .sandwich {
-	margin: 0;
+	display:block;
+	margin: 5px 0 0 0;
+}
+
+.sandwich-item-price, .sandwih-item-food {
+	margin: 10px;
+}
+
+#total-price {
+	font-weight: bold;
+	position: relative;
+	top: 35%;
 }
