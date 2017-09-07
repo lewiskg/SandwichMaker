@@ -36,7 +36,6 @@ function printItemsToDom(foodTypeObject) {
 		div_Node.appendChild(ul_Node);
 	}
 	menuOnDom.appendChild(div_Node);
-//	menuOnDom.appendChild(document.createElement('hr'));
 }
 
 function addEventListeners() {
@@ -45,28 +44,45 @@ function addEventListeners() {
 		foodItemsArray[i].addEventListener('change', function(e) {
 			if (e.target.checked) {
 				includeItem(e);
+				calculatePrice();
 			} else {
 				removeItem(e);
+				calculatePrice();
 			}
 		});
 	}
 }
 
 function includeItem(e) {
-	const sandwichItem =  document.getElementById("made-sandwich");
+	const sandwichItem =  document.getElementById("sandwich-holder");
 	let price = Number(e.target.value);
 		price = parseFloat(price);
 	let item = e.target.nextSibling.innerHTML;
-	let addSandwichItem = `<span id="${item}">${price.toFixed(2)} ${item}</span>`;
+	//let addSandwichItem = `<span id="sandwich-${item}">${price.toFixed(2)}<span> ${item}</span>`;
+	let addSandwichItem = `<p id="sandwich-${item}" class="sandwich"><span class="sandwich-item-price">${price.toFixed(2)}</span><span class="sandwich-item-food">${item}</span></p>`;
 	sandwichItem.innerHTML += addSandwichItem;
 }
 
 function removeItem(e) {
-	const sandwichItem =  document.getElementById("made-sandwich");
-	let item = e.target.nextSibling.innerHTML;
-	sandwichItem.removeChild(document.getElementById(`${item}`));
+	const sandwichItem =  document.getElementById("sandwich-holder");
+	let item = e.target.nextSibling.innerText;
+	sandwichItem.removeChild(document.getElementById(`sandwich-${item}`));
 	console.log("item removed", e.target.nextSibling.innerHTML);
 }
 
+function calculatePrice() {
+	const sandwichItem =  document.getElementById("sandwich-holder");
+	if (sandwichItem.firstChild) { 
+		let itemPrices = document.getElementsByClassName("sandwich-item-price");
+		let total = 0;
+		for (let i =0; i < itemPrices.length; i++) {
+			total += parseFloat(itemPrices[i].innerText);
+		}
+		document.getElementById("sandwich-price").innerHTML = `<p id="total-price">$${total.toFixed(2)}</p>`;
+	} else if (!sandwichItem.firstChild) {
+		document.getElementById("sandwich-price").removeChild(document.getElementById("total-price"));
+	}
 
+
+}
 
