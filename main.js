@@ -1,6 +1,4 @@
 
-
-
 printItemsToDom(Sandwich.getBread());
 printItemsToDom(Sandwich.getCheese());
 printItemsToDom(Sandwich.getMeat());
@@ -41,7 +39,7 @@ function printItemsToDom(foodTypeObject) {
 function addEventListeners() {
 	let foodItemsArray = document.getElementsByClassName('food-input');
 	for (let i = 0; i < foodItemsArray.length; i++) {
-		foodItemsArray[i].addEventListener('change', function(e) {
+		foodItemsArray[i].addEventListener('change', (e) => {
 			if (e.target.checked) {
 				includeItem(e);
 				calculatePrice();
@@ -58,7 +56,6 @@ function includeItem(e) {
 	let price = Number(e.target.value);
 		price = parseFloat(price);
 	let item = e.target.nextSibling.innerHTML;
-	//let addSandwichItem = `<span id="sandwich-${item}">${price.toFixed(2)}<span> ${item}</span>`;
 	let addSandwichItem = `<p id="sandwich-${item}" class="sandwich"><span class="sandwich-item-price">${price.toFixed(2)}</span><span class="sandwich-item-food">${item}</span></p>`;
 	sandwichItem.innerHTML += addSandwichItem;
 }
@@ -82,7 +79,4 @@ function calculatePrice() {
 	} else if (!sandwichItem.firstChild) {
 		document.getElementById("sandwich-price").removeChild(document.getElementById("total-price"));
 	}
-
-
 }
-
