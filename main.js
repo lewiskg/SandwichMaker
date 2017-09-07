@@ -14,7 +14,7 @@ addEventListeners();
 
 
 function printItemsToDom(foodTypeObject) {
-	const menuOnDom 	= document.getElementById("menu-items");
+	const menuOnDom = document.getElementById("menu-items");
 	const div_Node	= document.createElement('div');
 	const ul_Node 	= document.createElement('ul');
 	div_Node.setAttribute('class','food-group');
@@ -56,7 +56,7 @@ function includeItem(e) {
 	let price = Number(e.target.value);
 		price = parseFloat(price);
 	let item = e.target.nextSibling.innerHTML;
-	let addSandwichItem = `<p id="sandwich-${item}" class="sandwich"><span class="sandwich-item-price">${price.toFixed(2)}</span><span class="sandwich-item-food">${item}</span></p>`;
+	let addSandwichItem = `<span id="sandwich-${item}" class="sandwich"><span class="sandwich-item-price">${price.toFixed(2)}</span><span class="sandwich-item-food">${item}</span></span>`;
 	sandwichItem.innerHTML += addSandwichItem;
 }
 
