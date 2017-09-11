@@ -1,9 +1,9 @@
 
-printItemsToDom(Sandwich.getBread());
-printItemsToDom(Sandwich.getCheese());
-printItemsToDom(Sandwich.getMeat());
-printItemsToDom(Sandwich.getVeggie());
-printItemsToDom(Sandwich.getCondiment());
+printItemsToDom("bread", Sandwich.getBread());
+printItemsToDom("cheese",Sandwich.getCheese());
+printItemsToDom("meat",Sandwich.getMeat());
+printItemsToDom("veggie", Sandwich.getVeggie());
+printItemsToDom("condiment", Sandwich.getCondiment());
 
 addEventListeners();
 
@@ -13,7 +13,7 @@ addEventListeners();
 ////////////////////
 
 
-function printItemsToDom(foodTypeObject) {
+function printItemsToDom(foodCatagory, foodTypeObject) {
 	const menuOnDom = document.getElementById("menu-items");
 	const div_Node	= document.createElement('div');
 	const ul_Node 	= document.createElement('ul');
@@ -26,7 +26,7 @@ function printItemsToDom(foodTypeObject) {
 		label_Node.innerHTML = `${key}`;
 		input_Node.setAttribute('type', 'checkbox');
 		input_Node.setAttribute('class','food-input');
-		input_Node.setAttribute('value', foodTypeObject[key]);
+		input_Node.setAttribute('value', foodCatagory);
 		li_Node.setAttribute('class','food-item');
 		li_Node.appendChild(input_Node);
 		li_Node.appendChild(label_Node);
@@ -41,42 +41,13 @@ function addEventListeners() {
 	for (let i = 0; i < foodItemsArray.length; i++) {
 		foodItemsArray[i].addEventListener('change', (e) => {
 			if (e.target.checked) {
-				includeItem(e);
-				calculatePrice();
+				Sandwich.includeItem(e);
+				Sandwich.calculatePrice();
 			} else {
-				removeItem(e);
-				calculatePrice();
+				Sandwich.removeItem(e);
+				Sandwich.calculatePrice();
 			}
 		});
 	}
 }
 
-function includeItem(e) {
-	const sandwichItem =  document.getElementById("sandwich-holder");
-	let price = Number(e.target.value);
-		price = parseFloat(price);
-	let item = e.target.nextSibling.innerHTML;
-	let addSandwichItem = `<span id="sandwich-${item}" class="sandwich"><span class="sandwich-item-price">${price.toFixed(2)}</span><span class="sandwich-item-food">${item}</span></span>`;
-	sandwichItem.innerHTML += addSandwichItem;
-}
-
-function removeItem(e) {
-	const sandwichItem =  document.getElementById("sandwich-holder");
-	let item = e.target.nextSibling.innerText;
-	sandwichItem.removeChild(document.getElementById(`sandwich-${item}`));
-	console.log("item removed", e.target.nextSibling.innerHTML);
-}
-
-function calculatePrice() {
-	const sandwichItem =  document.getElementById("sandwich-holder");
-	if (sandwichItem.firstChild) { 
-		let itemPrices = document.getElementsByClassName("sandwich-item-price");
-		let total = 0;
-		for (let i =0; i < itemPrices.length; i++) {
-			total += parseFloat(itemPrices[i].innerText);
-		}
-		document.getElementById("sandwich-price").innerHTML = `<p id="total-price">$${total.toFixed(2)}</p>`;
-	} else if (!sandwichItem.firstChild) {
-		document.getElementById("sandwich-price").removeChild(document.getElementById("total-price"));
-	}
-}
